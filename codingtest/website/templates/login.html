@@ -1,0 +1,30 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+  </head>
+<div class="upload-main">
+
+<form method="post">
+
+
+    {% block content %}
+    <h1>Log in</h1>
+
+    <form method="post">
+      {% if error %}
+      <p style="color: red;">{{ error }}</p>
+    {% endif %}
+      {% csrf_token %}
+      <label for="email">Email:</label>
+      <input type="email" name="email" required><br><br>
+      <label for="password">Password:</label>
+      <input type="password" name="password" required><br><br>
+      <input type="submit" value="Log in">
+      <button onclick="window.location.href='/signup'">Sign up</button>
+
+    </form>
+  {% endblock %}
+
+  </form>
+  

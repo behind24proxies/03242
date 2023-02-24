@@ -1,0 +1,71 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+  </head>
+{% block content %}
+<div class="container-main">
+<div class="myfiles">
+  <h1>My Files</h1> 
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Filename</th>
+        <th>Date</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% for file in files %}
+      <tr>
+        <td>
+          <a href="#" onclick="showIframe('{{ file.filename }}','{{ file.path }}')">{{ file.path }}</a>
+        </td>
+        <td>{{ file.created_at }}</td>
+        <td>
+
+        </div>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <button onclick="window.location.href='/csv'">Upload</button>
+</div>
+<div class="iframe-container">
+    <div>
+    <h1 id='filepath'>Sample.csv</h1>
+    </div>
+    <div>
+    <iframe id="file-iframe" src="https://docs.google.com/gview?url=http://950468456445344.42web.io/CVS/rvagnskctphevuz.csv&embedded=true"></iframe>
+    </div>
+  <button id="downloader" onclick="download()">Download</button>
+
+  </div>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function download(){
+    var iframe = document.getElementById("file-iframe");
+    var src = iframe.src;
+    const regex = /http:\/\/950468456445344\.42web\.io\/CVS\/(.+?)&/i;
+    const match = src.match(regex);
+    if (match)(
+        window.location.href = match[0].replace("&","")
+    )
+}
+function showIframe(name,path) {
+  var iframe = document.getElementById("file-iframe");
+  iframe.src = name;
+  iframe.style.display = "block";
+  document.getElementById("filepath").innerHTML = path;
+  var downloader = document.getElementById("downloader");
+}
+</script>
+{% endblock %}
